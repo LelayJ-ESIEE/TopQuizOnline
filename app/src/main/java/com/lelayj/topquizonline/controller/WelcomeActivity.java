@@ -13,11 +13,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.lelayj.topquizonline.R;
-import com.lelayj.topquizonline.model.User;
+import com.lelayj.topquizonline.model.Player;
 
-public class MainActivity extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
-    private static final int GAME_ACTIVITY_REQUEST_CODE = 42;
+    private static final int QUESTION_ACTIVITY_REQUEST_CODE = 42;
     private static final String SHARED_PREF_USER_INFO = "SHARED_PREF_USER_INFO";
     private static final String SHARED_PREF_USER_INFO_NAME = "SHARED_PREF_USER_INFO_NAME";
     private static final String SHARED_PREF_USER_INFO_SCORE = "SHARED_PREF_USER_INFO_SCORE";
@@ -25,23 +25,23 @@ public class MainActivity extends AppCompatActivity {
     private TextView mGreetingTextView;
     private EditText mNameEditText;
     private Button mPlayButton;
-    private User mUser;
+    private Player mPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Log.d(TAG, "onCreate() called");
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_welcome);
 
         mGreetingTextView = findViewById(R.id.main_textview_greeting);
         mNameEditText = findViewById(R.id.main_edittext_name);
         mPlayButton = findViewById(R.id.main_button_play);
-        mUser = new User("", 0);
+        mPlayer = new Player("", 0);
 
         String firstName = getSharedPreferences(SHARED_PREF_USER_INFO, MODE_PRIVATE).getString(SHARED_PREF_USER_INFO_NAME, null);
         if (firstName != null && !firstName.isEmpty()) {
-            mUser.setFirstName(firstName);
-            mGreetingTextView.setText(String.format(getString(R.string.welcome_back), mUser.getFirstName(), mUser.getScore()));
+            mPlayer.setFirstName(firstName);
+            mGreetingTextView.setText(String.format(getString(R.string.welcome_back), mPlayer.getFirstName(), mPlayer.getScore()));
             mNameEditText.setText(firstName);
             mNameEditText.setSelection(firstName.length() - 1);
             mPlayButton.setEnabled(true);
@@ -69,14 +69,14 @@ public class MainActivity extends AppCompatActivity {
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mUser.setFirstName(mNameEditText.getText().toString());
+                mPlayer.setFirstName(mNameEditText.getText().toString());
                 getSharedPreferences(SHARED_PREF_USER_INFO, MODE_PRIVATE)
                         .edit()
-                        .putString(SHARED_PREF_USER_INFO_NAME, mUser.getFirstName())
+                        .putString(SHARED_PREF_USER_INFO_NAME, mPlayer.getFirstName())
                         .apply();
-                Intent gameActivityIntent = new Intent(MainActivity.this, GameActivity.class);
-                gameActivityIntent.putExtra(GameActivity.BUNDLE_EXTRA_USER, mUser);
-                startActivityForResult(gameActivityIntent, GAME_ACTIVITY_REQUEST_CODE);
+                Intent questionActivityIntent = new Intent(WelcomeActivity.this, QuestionActivity.class);
+                questionActivityIntent.putExtra(QuestionActivity.BUNDLE_EXTRA_PLAYER, mPlayer);
+                startActivityForResult(questionActivityIntent, QUESTION_ACTIVITY_REQUEST_CODE);
             }
         });
     }
@@ -84,13 +84,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (GAME_ACTIVITY_REQUEST_CODE == requestCode && RESULT_OK == resultCode) {
-            mUser = data.getParcelableExtra(GameActivity.BUNDLE_EXTRA_USER);
+        if (QUESTION_ACTIVITY_REQUEST_CODE == requestCode && RESULT_OK == resultCode) {
+            mPlayer = data.getParcelableExtra(QuestionActivity.BUNDLE_EXTRA_PLAYER);
             getSharedPreferences(SHARED_PREF_USER_INFO, MODE_PRIVATE)
                     .edit()
-                    .putInt(SHARED_PREF_USER_INFO_SCORE, mUser.getScore())
+                    .putInt(SHARED_PREF_USER_INFO_SCORE, mPlayer.getScore())
                     .apply();
-            mGreetingTextView.setText(String.format(getString(R.string.welcome_back), mUser.getFirstName(), mUser.getScore()));
+            mGreetingTextView.setText(String.format(getString(R.string.welcome_back), mPlayer.getFirstName(), mPlayer.getScore()));
         }
     }
 

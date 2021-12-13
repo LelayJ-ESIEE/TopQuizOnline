@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/main_textview_greeting"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="4dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:text="@string/welcome_back" />
+
+    <Button
+        android:id="@+id/menu_activity_button_quiz"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:padding="16dp"
+        android:textSize="20sp"
+        tools:text="@string/quiz" />
+
+    <Button
+        android:id="@+id/menu_activity_button_create"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:padding="16dp"
+        android:textSize="20sp"
+        tools:text="@string/create" />
+
+    <Button
+        android:id="@+id/menu_activity_button_ranking"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:padding="16dp"
+        android:textSize="20sp"
+        tools:text="@string/ranking" />
+
+    <Button
+        android:id="@+id/menu_activity_button_settings"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:padding="16dp"
+        android:textSize="20sp"
+        tools:text="@string/settings" />
+
+</LinearLayout>

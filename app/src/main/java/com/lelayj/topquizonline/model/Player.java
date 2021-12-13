@@ -3,29 +3,30 @@ package com.lelayj.topquizonline.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class User implements Parcelable {
+public class Player implements Parcelable {
     private String mFirstName;
     private int mScore;
+    private int mId;
 
 
-    public static final Creator<User> CREATOR = new Creator<User>() {
+    public static final Creator<Player> CREATOR = new Creator<Player>() {
         @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
+        public Player createFromParcel(Parcel in) {
+            return new Player(in);
         }
 
         @Override
-        public User[] newArray(int size) {
-            return new User[size];
+        public Player[] newArray(int size) {
+            return new Player[size];
         }
     };
 
-    protected User(Parcel in) {
+    protected Player(Parcel in) {
         mFirstName = in.readString();
         mScore = in.readInt();
     }
 
-    public User(String firstName, int score) {
+    public Player(String firstName, int score) {
         mFirstName = firstName;
         mScore = score;
     }

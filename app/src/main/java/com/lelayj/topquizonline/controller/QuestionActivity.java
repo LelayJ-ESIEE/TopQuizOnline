@@ -17,13 +17,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.lelayj.topquizonline.R;
 import com.lelayj.topquizonline.model.Question;
 import com.lelayj.topquizonline.model.QuestionBank;
-import com.lelayj.topquizonline.model.User;
+import com.lelayj.topquizonline.model.Player;
 
 import java.util.Arrays;
+import java.util.List;
 
-public class GameActivity extends AppCompatActivity implements View.OnClickListener {
-    public static final String TAG = "GameActivity";
-    public static final String BUNDLE_EXTRA_USER = "BUNDLE_EXTRA_USER";
+public class QuestionActivity extends AppCompatActivity implements View.OnClickListener {
+    public static final String TAG = "QuestionActivity";
+    public static final String BUNDLE_EXTRA_PLAYER = "BUNDLE_EXTRA_PLAYER";
     public static final String BUNDLE_STATE_QUESTION = "BUNDLE_STATE_QUESTION";
     public static final String BUNDLE_STATE_QUESTION_BANK = "BUNDLE_STATE_QUESTION_BANK";
     public static final String BUNDLE_STATE_SCORE = "BUNDLE_STATE_SCORE";
@@ -37,26 +38,26 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private QuestionBank mQuestionBank;
     private boolean mEnableTouchEvents;
     private int mRemainingQuestionCount = 3;
-    private User mUser;
+    private Player mPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        setContentView(R.layout.activity_question);
         // Log.d(TAG, "onCreate() called");
 
         Intent intent = getIntent();
-        if (intent.hasExtra(BUNDLE_EXTRA_USER)) {
-            mUser = intent.getParcelableExtra(BUNDLE_EXTRA_USER);
+        if (intent.hasExtra(BUNDLE_EXTRA_PLAYER)) {
+            mPlayer = intent.getParcelableExtra(BUNDLE_EXTRA_PLAYER);
         }
 
         if (savedInstanceState != null) {
-            mUser.setScore(savedInstanceState.getInt(BUNDLE_STATE_SCORE));
+            mPlayer.setScore(savedInstanceState.getInt(BUNDLE_STATE_SCORE));
             mRemainingQuestionCount = savedInstanceState.getInt(BUNDLE_STATE_QUESTION);
             mQuestionBank = savedInstanceState.getParcelable(BUNDLE_STATE_QUESTION_BANK);
             mQuestionBank.setQuestionIndex(3 - mRemainingQuestionCount);
         } else {
-            mUser.setScore(0);
+            mPlayer.setScore(0);
             mRemainingQuestionCount = 3;
             mQuestionBank = generateQuestionBank();
         }
@@ -84,73 +85,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private QuestionBank generateQuestionBank(){
-        Question question1 = new Question(
-                getString(R.string.question1),
-                Arrays.asList(
-                        getString(R.string.answer11),
-                        getString(R.string.answer12),
-                        getString(R.string.answer13),
-                        getString(R.string.answer14)
-                ),
-                0
-        );
-
-        Question question2 = new Question(
-                getString(R.string.question2),
-                Arrays.asList(
-                        getString(R.string.answer21),
-                        getString(R.string.answer22),
-                        getString(R.string.answer23),
-                        getString(R.string.answer24)
-                ),
-                3
-        );
-
-        Question question3 = new Question(
-                getString(R.string.question3),
-                Arrays.asList(
-                        getString(R.string.answer31),
-                        getString(R.string.answer32),
-                        getString(R.string.answer33),
-                        getString(R.string.answer34)
-                ),
-                3
-        );
-
-        Question question4 = new Question(
-                getString(R.string.question4),
-                Arrays.asList(
-                        getString(R.string.answer41),
-                        getString(R.string.answer42),
-                        getString(R.string.answer43),
-                        getString(R.string.answer44)
-                ),
-                2
-        );
-
-        Question question5 = new Question(
-                getString(R.string.question5),
-                Arrays.asList(
-                        getString(R.string.answer51),
-                        getString(R.string.answer52),
-                        getString(R.string.answer53),
-                        getString(R.string.answer54)
-                ),
-                1
-        );
-
-        Question question6 = new Question(
-                getString(R.string.question6),
-                Arrays.asList(
-                        getString(R.string.answer61),
-                        getString(R.string.answer62),
-                        getString(R.string.answer63),
-                        getString(R.string.answer64)
-                ),
-                0
-        );
-
-        return new QuestionBank(Arrays.asList(question1, question2, question3, question4, question5, question6));
+        List<Question> list = Arrays.asList();
+        return new QuestionBank(list);
     }
 
     private void displayQuestion(final Question question) {
@@ -165,7 +101,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Well done!")
-                .setMessage("Your score is " + mUser.getScore())
+                .setMessage("Your score is " + mPlayer.getScore())
                 .setPositiveButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -179,7 +115,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void finish() {
         Intent intent = new Intent();
-        intent.putExtra(BUNDLE_EXTRA_USER, mUser);
+        intent.putExtra(BUNDLE_EXTRA_PLAYER, mPlayer);
         setResult(RESULT_OK, intent);
         super.finish();
     }
@@ -206,7 +142,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if(index == mQuestionBank.getCurrentQuestion().getAnswerIndex()) {
-            mUser.increaseScore(1);
+            mPlayer.increaseScore(1);
             Toast.makeText(this, getString(R.string.goodAnswer), Toast.LENGTH_SHORT).show();
         }
         else
@@ -260,7 +196,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putInt(BUNDLE_STATE_SCORE, mUser.getScore());
+        outState.putInt(BUNDLE_STATE_SCORE, mPlayer.getScore());
         outState.putInt(BUNDLE_STATE_QUESTION, mRemainingQuestionCount);
         outState.putParcelable(BUNDLE_STATE_QUESTION_BANK, mQuestionBank);
         super.onSaveInstanceState(outState);

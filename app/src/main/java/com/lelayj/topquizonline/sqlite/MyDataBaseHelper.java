@@ -7,6 +7,11 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.lelayj.topquizonline.model.Player;
+import com.lelayj.topquizonline.model.QuestionBank;
+
+import java.util.List;
+
 public class MyDataBaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "SQLite";
 
@@ -53,6 +58,11 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     private static final String COLUMN_QUESTION_BANK_ID = "Id_QuestionBank";
     private static final String COLUMN_QUESTION_BANK_TITLE = "Title";
+
+    // ID bases
+    private static int sPlayerNextId = 0;
+    private static int sQuestionBankNextId = 0;
+    private static int sQuestionNextId = 0;
 
     public MyDataBaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, DATABASE_FACTORY, DATABASE_VERSION);
@@ -124,5 +134,12 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void createDefaultQuestionBanks() {} // TODO
+    public void addQuestionBank(QuestionBank questionBank) {} // TODO
+    public QuestionBank getQuestionBank(int id) {return null;} // TODO
+    public List<String> getAllQuestionBanksTitles() {return null;} // TODO
 
+    public void createDefaultPlayers() {} // TODO
+    public void addPlayer(Player Player) {} // TODO
+    public Player getPlayer(int id) {return null;} // TODO
 }
