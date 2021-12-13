@@ -34,6 +34,11 @@ public class WelcomeActivity extends AppCompatActivity {
         mPlayButton = findViewById(R.id.main_button_play);
         mPlayer = new Player("", 0);
 
+        Intent intent = getIntent();
+
+        if (intent.hasExtra(BUNDLE_EXTRA_PLAYER)) {
+            mPlayer = intent.getParcelableExtra(BUNDLE_EXTRA_PLAYER);
+        }
         String firstName = getSharedPreferences(SHARED_PREF_USER_INFO, MODE_PRIVATE).getString(SHARED_PREF_USER_INFO_NAME, null);
         if (firstName != null && !firstName.isEmpty()) {
             mPlayer.setFirstName(firstName);
@@ -88,35 +93,5 @@ public class WelcomeActivity extends AppCompatActivity {
                     .apply();
             mGreetingTextView.setText(String.format(getString(R.string.welcome_back), mPlayer.getFirstName(), mPlayer.getScore()));
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // Log.d(TAG, "onStart() called");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Log.d(TAG, "onResume() called");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // Log.d(TAG, "onPause() called");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        // Log.d(TAG, "onStop() called");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // Log.d(TAG, "onDestroy() called");
     }
 }
