@@ -1,5 +1,6 @@
 package com.lelayj.topquizonline.sqlite;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -8,6 +9,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.lelayj.topquizonline.model.Player;
+import com.lelayj.topquizonline.model.Question;
 import com.lelayj.topquizonline.model.QuestionBank;
 
 import java.util.List;
@@ -60,9 +62,9 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_QUESTION_BANK_TITLE = "Title";
 
     // ID bases
-    private static int sPlayerNextId = 0;
+    /* private static int sPlayerNextId = 0;
     private static int sQuestionBankNextId = 0;
-    private static int sQuestionNextId = 0;
+    private static int sQuestionNextId = 0; */
 
     public MyDataBaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, DATABASE_FACTORY, DATABASE_VERSION);
@@ -135,11 +137,71 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     }
 
     public void createDefaultQuestionBanks() {} // TODO
-    public void addQuestionBank(QuestionBank questionBank) {} // TODO
+
+    public void addQuestionBank(QuestionBank questionBank) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_QUESTION_BANK_TITLE, questionBank.getTitle());
+
+        db.insert(TABLE_QUESTION_BANK, null, values);
+        db.close();
+    }
+
     public QuestionBank getQuestionBank(int id) {return null;} // TODO
+
+    public QuestionBank getQuestionBankId(String title) {return null;} // TODO
+
     public List<String> getAllQuestionBanksTitles() {return null;} // TODO
 
     public void createDefaultPlayers() {} // TODO
-    public void addPlayer(Player Player) {} // TODO
+
+    public void addPlayer(Player player) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PLAYER_NAME, player.getFirstName());
+
+        db.insert(TABLE_PLAYER, null, values);
+        db.close();
+    }
+
     public Player getPlayer(int id) {return null;} // TODO
+
+    public int updatePlayer(int id) {return 0;} // TODO
+
+    public void addQuestion(Question question) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_QUESTION_CONTENT, question.getQuestion());
+        values.put(COLUMN_QUESTION_ANSWER_1, question.getChoiceList().get(0));
+        values.put(COLUMN_QUESTION_ANSWER_2, question.getChoiceList().get(1));
+        values.put(COLUMN_QUESTION_ANSWER_3, question.getChoiceList().get(2));
+        values.put(COLUMN_QUESTION_ANSWER_4, question.getChoiceList().get(3));
+        values.put(COLUMN_QUESTION_RIGHT_ANSWER, question.getAnswerIndex());
+
+        db.insert(TABLE_QUESTION, null, values);
+        db.close();
+    }
+
+    public void createDefaultAnswers() {} // TODO
+
+    public void addAnswer(int idPlayer, int idQuestionBank, int duration, int ratio, int score) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ANSWERS_TO_ID_PLAYER, idPlayer);
+        values.put(COLUMN_ANSWERS_TO_ID_QUESTION_BANK, idQuestionBank);
+        values.put(COLUMN_ANSWERS_TO_DURATION, duration);
+        values.put(COLUMN_ANSWERS_TO_RATIO, ratio);
+        values.put(COLUMN_ANSWERS_TO_SCORE, score);
+
+        db.insert(TABLE_ANSWERS_TO, null, values);
+        db.close();
+    }
+
+    public int getAnswer(int idPlayer, int idQuestionBank) {return 0;} // TODO
+
+    public int updateAnswer(int idPlayer, int idQuestionBank) {return 0;} // TODO
 }
