@@ -17,10 +17,6 @@ import com.lelayj.topquizonline.model.Player;
 
 public class WelcomeActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
-    private static final int QUESTION_ACTIVITY_REQUEST_CODE = 42;
-    private static final String SHARED_PREF_USER_INFO = "SHARED_PREF_USER_INFO";
-    private static final String SHARED_PREF_USER_INFO_NAME = "SHARED_PREF_USER_INFO_NAME";
-    private static final String SHARED_PREF_USER_INFO_SCORE = "SHARED_PREF_USER_INFO_SCORE";
 
     private TextView mGreetingTextView;
     private EditText mNameEditText;

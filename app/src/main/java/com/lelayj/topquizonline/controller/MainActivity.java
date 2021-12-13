@@ -9,7 +9,15 @@ import android.widget.Button;
 import com.lelayj.topquizonline.R;
 import com.lelayj.topquizonline.model.Player;
 
-public class MenuActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
+    public static final String BUNDLE_EXTRA_PLAYER = "BUNDLE_EXTRA_PLAYER";
+    private static final String SHARED_PREF_USER_INFO = "SHARED_PREF_USER_INFO";
+    private static final String SHARED_PREF_USER_INFO_NAME = "SHARED_PREF_USER_INFO_NAME";
+    private static final int WELCOME_ACTIVITY_REQUEST_CODE = 0;
+    private static final int CHOICE_ACTIVITY_REQUEST_CODE = 1;
+    private static final int ENTITLEMENT_ACTIVITY_REQUEST_CODE = 2;
+    private static final int RANKING_ACTIVITY_REQUEST_CODE = 3;
+    private static final int SETTINGS_ACTIVITY_REQUEST_CODE = 4;
     private Player mPlayer;
     private Button mQuizButton;
     private Button mCreateButton;
@@ -28,9 +36,9 @@ public class MenuActivity extends AppCompatActivity {
 
         String firstName = getSharedPreferences(SHARED_PREF_USER_INFO, MODE_PRIVATE).getString(SHARED_PREF_USER_INFO_NAME, null);
         if (firstName != null && !firstName.isEmpty()) {
-            Intent welcomeActivityIntent = new Intent(MenuActivity.this, WelcomeActivity.class);
-            welcomeActivityIntent.putExtra(WelcomeActivity.BUNDLE_EXTRA_PLAYER, mPlayer);
-            startActivityForResult(questionActivityIntent, QUESTION_ACTIVITY_REQUEST_CODE);
+            Intent welcomeActivityIntent = new Intent(MainActivity.this, WelcomeActivity.class);
+            welcomeActivityIntent.putExtra(this.BUNDLE_EXTRA_PLAYER, mPlayer);
+            startActivityForResult(welcomeActivityIntent, WELCOME_ACTIVITY_REQUEST_CODE);
         }
     }
 }
