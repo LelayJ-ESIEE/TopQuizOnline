@@ -5,7 +5,6 @@ import android.os.Parcelable;
 
 public class Player implements Parcelable {
     private String mFirstName;
-    private int mScore;
     private int mId;
 
 
