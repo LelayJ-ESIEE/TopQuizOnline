@@ -203,5 +203,19 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     public int getAnswer(int idPlayer, int idQuestionBank) {return 0;} // TODO
 
-    public int updateAnswer(int idPlayer, int idQuestionBank) {return 0;} // TODO
+    public int updateAnswer(int idPlayer, int idQuestionBank, int duration, int ratio, int score) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ANSWERS_TO_ID_PLAYER, idPlayer);
+        values.put(COLUMN_ANSWERS_TO_ID_QUESTION_BANK, idQuestionBank);
+        values.put(COLUMN_ANSWERS_TO_DURATION, duration);
+        values.put(COLUMN_ANSWERS_TO_RATIO, ratio);
+        values.put(COLUMN_ANSWERS_TO_SCORE, score);
+
+        return db.update(TABLE_ANSWERS_TO, values,
+                COLUMN_ANSWERS_TO_ID_PLAYER + " = ? AND " + COLUMN_ANSWERS_TO_ID_QUESTION_BANK + " = ?",
+                new String[]{String.valueOf(idPlayer),String.valueOf(idQuestionBank)}
+                );
+    } // TODO
 }

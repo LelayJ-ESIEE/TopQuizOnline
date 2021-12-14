@@ -22,12 +22,12 @@ public class Player implements Parcelable {
 
     protected Player(Parcel in) {
         mFirstName = in.readString();
-        mScore = in.readInt();
+        mId = in.readInt();
     }
 
-    public Player(String firstName, int score) {
+    public Player(String firstName, int id) {
         mFirstName = firstName;
-        mScore = score;
+        mId = id;
     }
 
     @Override
@@ -38,26 +38,22 @@ public class Player implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mFirstName);
-        dest.writeInt(mScore);
+        dest.writeInt(mId);
     }
 
     public String getFirstName() {
         return mFirstName;
     }
 
-    public int getScore() {
-        return mScore;
+    public int getId() {
+        return mId;
     }
 
     public void setFirstName(String mFirstName) {
         this.mFirstName = mFirstName;
     }
 
-    public void setScore(int score) {
-        mScore = score;
-    }
-
-    public void increaseScore(int amount){
-        mScore += amount;
+    public void setId(int id) {
+        mId = id;
     }
 }

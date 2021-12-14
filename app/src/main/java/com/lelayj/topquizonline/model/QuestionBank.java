@@ -9,11 +9,13 @@ import java.util.List;
 
 public class QuestionBank implements Parcelable {
     private List<Question> mQuestionList;
+    private String mTitle;
     private int mQuestionIndex;
 
-    public QuestionBank(List<Question> questionList) {
+    public QuestionBank(List<Question> questionList, String title) {
         mQuestionList = questionList;
         Collections.shuffle(mQuestionList);
+        mTitle = title;
         mQuestionIndex = 0;
     }
 
@@ -46,6 +48,10 @@ public class QuestionBank implements Parcelable {
 
     public void setQuestionIndex(int questionIndex) {
         mQuestionIndex = questionIndex;
+    }
+
+    public String getTitle() {
+        return mTitle;
     }
 
     @Override
